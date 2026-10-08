@@ -7,12 +7,6 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
-   <style>
-    
-  </style>
-
-
 
    <section class="pricing-section">
      <h1>choose your plan</h1>
@@ -20,7 +14,7 @@
     
        <div class="pricing container">
 
-        <div class="pricing-card">
+        <div class="pricing-card selected-card">
         <div class="card-header">
                <h2>Basic</h2>
                <p>perfect for beginners</p>
@@ -38,11 +32,11 @@
 
   
     <div class="card-action">
-    <button>Choose plan</button>
+    <button class="plan-button selected-plan" type="button" aria-pressed="true" data-plan="Basic">Choose Basic plan</button>
     </div>
 
    <!--pro plan-->
-  <div>
+  <div class="pricing-card">
 
     <div class="card-header">
         <h2>pro</h2>
@@ -62,14 +56,14 @@
    </ul>
 
    <div class="card-action">
-    <button>choose plan</button>
+    <button class="plan-button" type="button" aria-pressed="false" data-plan="Pro">Choose Pro plan</button>
    </div>
 
   </div>
    
 
   <!--premium plan-->
-   <div>
+   <div class="pricing-card">
   
   <div class="price-container">
    <h2>Premium</h2>
@@ -90,7 +84,7 @@
  
 
 <div class="card-action">
-    <button>choose plan</button>
+    <button class="plan-button" type="button" aria-pressed="false" data-plan="Premium">Choose Premium plan</button>
    </div>
 
    </div>
@@ -112,6 +106,31 @@
 
 
 
+
+  <p id="selection-message" class="selection-message" aria-live="polite">Basic plan selected</p>
+
+  <script>
+    const planButtons = document.querySelectorAll('.plan-button');
+    const planCards = document.querySelectorAll('.pricing-card');
+    const selectionMessage = document.getElementById('selection-message');
+
+    planButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const selectedPlan = button.dataset.plan;
+
+        planCards.forEach((card) => card.classList.remove('selected-card'));
+        planButtons.forEach((item) => {
+          item.classList.remove('selected-plan');
+          item.setAttribute('aria-pressed', 'false');
+        });
+
+        button.classList.add('selected-plan');
+        button.setAttribute('aria-pressed', 'true');
+        button.closest('.pricing-card').classList.add('selected-card');
+        selectionMessage.textContent = `${selectedPlan} plan selected`;
+      });
+    });
+  </script>
 
 </body>
 </html>
